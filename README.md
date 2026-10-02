@@ -36,7 +36,15 @@ MapLibre is a native module, so Expo Go won't work: use a development build
 Apply `supabase/migrations/` to a Supabase project (PostGIS is built in).
 
 ## Status
-Early scaffold. See [docs/roadmap.md](docs/roadmap.md).
+Early, pre-release. Working today (all on demo data, not yet real trails):
+- Onboarding quiz that builds your hiker profile (saved on device)
+- Per-trail fit score, personal time estimate, and sun-exposure chart
+- Shade-aware "best time to start" planner with heat and water estimates
+- Map screen (MapLibre + OpenStreetMap)
+- Trail ingestion pipeline with sun/shade modeling and rest-spot detection (`pipeline/`)
+- Consent-based companion schema with row-level security (`supabase/`)
+
+Run tests: `cd app && npm test` and `cd pipeline && npm test`. See [docs/roadmap.md](docs/roadmap.md).
 
 ## License
 Not yet chosen (AGPL-3.0 is the leading candidate, to keep forks open).
