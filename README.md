@@ -28,8 +28,11 @@ the App Store. Google Play is a one-time ~$25.
 
 ## Getting started
 ```
-cd app && npm install && npx expo start
+cd app && npm install
+npx expo run:android   # or run:ios on a Mac
 ```
+MapLibre is a native module, so Expo Go won't work: use a development build
+(local `expo run:*` is free; EAS Build's free tier also works).
 Apply `supabase/migrations/` to a Supabase project (PostGIS is built in).
 
 ## Status
