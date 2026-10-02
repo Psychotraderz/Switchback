@@ -1,0 +1,9 @@
+{
+  "elements": [
+    { "type": "way", "id": 1, "tags": { "highway": "path", "name": "Calico O'Brien Loop", "sac_scale": "hiking" },
+      "geometry": [ {"lat": 36.1350, "lon": -115.4300}, {"lat": 36.1400, "lon": -115.4300}, {"lat": 36.1450, "lon": -115.4250} ] },
+    { "type": "way", "id": 2, "tags": { "highway": "footway" },
+      "geometry": [ {"lat": 36.1000, "lon": -115.4000}, {"lat": 36.10001, "lon": -115.4000} ] },
+    { "type": "node", "id": 3 }
+  ]
+}

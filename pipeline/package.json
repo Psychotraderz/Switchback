@@ -1,0 +1,10 @@
+{
+  "name": "switchback-pipeline",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "ingest": "node src/ingest.ts"
+  },
+  "engines": { "node": ">=22.18" }
+}
