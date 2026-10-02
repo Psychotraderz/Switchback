@@ -71,8 +71,7 @@ export default function TrailDetail({ trail, profile, onBack }: Props) {
         )}
         <Text style={styles.muted}>Estimates from a sun and terrain model. Conditions vary; carry extra water and know your limits.</Text>
       </View>
-      <Text style={styles.muted}>Demo data for development.</Text>
-    </ScrollView>
+          </ScrollView>
   );
 }
 

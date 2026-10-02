@@ -2,7 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import type { UserProfile } from "./src/core/types.ts";
-import type { DemoTrail } from "./src/data/demoTrails.ts";
+import * as Location from "expo-location";
+import { fetchTrailsNear } from "./src/api/supabase.ts";
+import { DEMO_TRAILS, type DemoTrail } from "./src/data/demoTrails.ts";
 import MapScreen from "./src/MapScreen";
 import Onboarding from "./src/screens/Onboarding.tsx";
 import TrailDetail from "./src/screens/TrailDetail.tsx";
@@ -18,12 +20,32 @@ export default function App() {
   const [editing, setEditing] = useState(false);
   const [tab, setTab] = useState<Tab>("trails");
   const [open, setOpen] = useState<DemoTrail | null>(null);
+  const [trails, setTrails] = useState<DemoTrail[]>(DEMO_TRAILS);
+  const [isDemo, setIsDemo] = useState(true);
 
   useEffect(() => {
     loadProfile().then((p) => {
       setProfile(p);
       setLoading(false);
     });
+  }, []);
+
+  // Real trails near the user when a backend is configured; demo data otherwise.
+  useEffect(() => {
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") return;
+        const pos = await Location.getCurrentPositionAsync({});
+        const found = await fetchTrailsNear(pos.coords.longitude, pos.coords.latitude);
+        if (found && found.length > 0) {
+          setTrails(found);
+          setIsDemo(false);
+        }
+      } catch {
+        // stay on demo data
+      }
+    })();
   }, []);
 
   if (loading) return null;
@@ -52,7 +74,7 @@ export default function App() {
         ) : open ? (
           <TrailDetail trail={open} profile={profile} onBack={() => setOpen(null)} />
         ) : (
-          <TrailsScreen profile={profile} onOpen={setOpen} onEditProfile={() => setEditing(true)} />
+          <TrailsScreen profile={profile} trails={trails} isDemo={isDemo} onOpen={setOpen} onEditProfile={() => setEditing(true)} />
         )}
       </View>
       <View style={styles.tabs}>

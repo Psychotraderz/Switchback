@@ -1,17 +1,19 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { fitScore } from "../core/fit.ts";
 import type { UserProfile } from "../core/types.ts";
-import { DEMO_TRAILS, type DemoTrail } from "../data/demoTrails.ts";
+import type { DemoTrail } from "../data/demoTrails.ts";
 import { colors } from "../theme.ts";
 
 interface Props {
   profile: UserProfile;
+  trails: DemoTrail[];
+  isDemo: boolean;
   onOpen: (t: DemoTrail) => void;
   onEditProfile: () => void;
 }
 
-export default function TrailsScreen({ profile, onOpen, onEditProfile }: Props) {
-  const ranked = DEMO_TRAILS.map((t) => ({ t, fit: fitScore(t, profile) })).sort((a, b) => b.fit.score - a.fit.score);
+export default function TrailsScreen({ profile, trails, isDemo, onOpen, onEditProfile }: Props) {
+  const ranked = trails.map((t) => ({ t, fit: fitScore(t, profile) })).sort((a, b) => b.fit.score - a.fit.score);
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <Text style={styles.h1}>Trails for you</Text>
@@ -30,7 +32,7 @@ export default function TrailsScreen({ profile, onOpen, onEditProfile }: Props) 
           </Text>
         </Pressable>
       ))}
-      <Text style={styles.muted}>Demo data for development.</Text>
+      {isDemo && <Text style={styles.muted}>Demo data for development. Connect a Supabase project to see real trails.</Text>}
     </ScrollView>
   );
 }
