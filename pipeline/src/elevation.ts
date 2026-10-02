@@ -11,7 +11,11 @@ export interface ElevationProvider {
  * 3DEP / SRTM GeoTIFF instead (implement ElevationProvider).
  */
 export class OpenMeteoProvider implements ElevationProvider {
-  constructor(private baseUrl = "https://api.open-meteo.com/v1/elevation") {}
+  private baseUrl: string;
+
+  constructor(baseUrl = "https://api.open-meteo.com/v1/elevation") {
+    this.baseUrl = baseUrl;
+  }
 
   async elevations(points: Point[]): Promise<number[]> {
     const out: number[] = [];
